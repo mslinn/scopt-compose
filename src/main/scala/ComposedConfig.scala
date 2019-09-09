@@ -1,5 +1,7 @@
 import scopt.{ OParser, OParserBuilder, Read }
 
+// Here's a demonstration of how we can split up the Config datatype.
+
 object SubProject1  {
   trait ConfigLike1[R] {
     def withDebug(value: Boolean): R
@@ -30,17 +32,16 @@ object SubProject2 {
   }
 }
 
-object Main extends App {
+/** Parser1 and parser2 are written against an abstract type R that meets type constraint of being a subtype of ConfigLike1[R] and ConfigLike2[R].
+ * In parser3, R gets bound to a concrete datatype Config. */
+object ComposedConfig extends App {
   // compose config datatypes and parsers
-  case class Config1(debug: Boolean = false, verbose: Boolean = false)
-      extends SubProject1.ConfigLike1[Config1]
-      with SubProject2.ConfigLike2[Config1] {
-    override def withDebug(value: Boolean) = copy(debug = value)
-    override def withVerbose(value: Boolean) = copy(verbose = value)
-  }
+  case class Config(debug: Boolean = false, verbose: Boolean = false)
+      extends SubProject1.ConfigLike1[Config]
+      with SubProject2.ConfigLike2[Config]
 
-  val parser3: OParser[_, Config1] = {
-    val builder = OParser.builder[Config1]
+  val parser: OParser[_, Config] = {
+    val builder = OParser.builder[Config]
     import builder._
     OParser.sequence(
       programName("scopt"),
@@ -48,5 +49,13 @@ object Main extends App {
       SubProject1.parser1,
       SubProject2.parser2
     )
+  }
+
+  // OParser.parse returns Option[Config]
+  OParser.parse(parser, args, Config()) match {
+    case Some(config) =>
+      // do something
+    case _ =>
+      // arguments are bad, error message will have been displayed
   }
 }
