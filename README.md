@@ -4,7 +4,7 @@
 [![Build Status](https://travis-ci.org/mslinn/scopt-compose.svg?branch=master)](https://travis-ci.org/mslinn/scopt-compose)
 [![GitHub version](https://badge.fury.io/gh/mslinn%2Fscopt-compose.svg)](https://badge.fury.io/gh/mslinn%2Fscopt-compose)
 
-Working version of the last sample program listing shown in
+Trying to get a working version of the last 2 sample program listings shown in
 [composing configuration datatype](http://eed3si9n.com/scopt4) code for 
 [scopt](https://github.com/scopt/scopt).
 
