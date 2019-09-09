@@ -3,7 +3,7 @@ import scopt.{OParser, OParserBuilder, Read}
 // Sample code for "composing with cmd("...").children(...)"
 // Another way of reusing an OParser is passing them into .children(...) method of a cmd("...") parser.
 // The original code example is rather scrambled, and incomplete.
-// I've tried to piece together what I think the original author meant, but it seems 2 case classes are required unless I misunderstand something.
+// I've tried to piece together what I think the original author meant, but it seems 3 case classes are required unless I misunderstand something.
 
 /** Parses command lines like:
  * update from to
@@ -64,5 +64,4 @@ object ComposedChildren extends App {
     case _ =>
       // arguments are bad, error message will have been displayed
   }
-
 }
